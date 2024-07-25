@@ -1,17 +1,64 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User } from '../models/User';
 
-import { User } from '../models/auth.models';
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+  private userRole: string;
 
-@Injectable({ providedIn: 'root' })
-export class UserProfileService {
-    constructor(private http: HttpClient) { }
+  private apiUrl = 'http://localhost:8085/api/user';
 
-    getAll() {
-        return this.http.get<User[]>(`/api/login`);
-    }
+  constructor(private http: HttpClient) {}
 
-    register(user: User) {
-        return this.http.post(`/users/register`, user);
-    }
+  addUser(user: User): Observable<User> {
+    return this.http.post<User>(this.apiUrl, user);
+  }
+
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${userId}`);
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
+  }
+
+  updateUser(userId: number, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${userId}`, user);
+  }
+
+  deleteUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${userId}`);
+  }
+
+  login(email: string, password: string): Observable<boolean> {
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+      .pipe(map(response => {
+        if (response.message === 'Login successful') {
+          this.userRole = response.role;
+          return true;
+        } else {
+          return false;
+        }
+      }));
+  }
+
+  logout(): Observable<void> {
+    return this.http.get<void>(`${this.apiUrl}/logout`, { withCredentials: true }).pipe(
+      map(() => {
+        this.userRole = null;
+      })
+    );
+  }
+
+  getRole(): string {
+    return this.userRole;
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.userRole;
+  }
 }

@@ -9,8 +9,11 @@ import { Table } from './advanced.model';
 import { AdvancedService } from './advanced.service';
 import { AdvancedSortableDirective, SortEvent } from './advanced-sortable.directive';
 import { Router } from '@angular/router';
-import { ServiceEqService } from 'src/app/pages/services/ServiceEq.service';
-import { ServiceEq } from 'src/app/pages/model/ServiceEq';
+import { ServiceEq } from 'src/app/core/models/ServiceEq';
+import { User } from 'src/app/core/models/User';
+import { ServiceEqService } from 'src/app/core/services/ServiceEq.service';
+import { UserService } from 'src/app/core/services/User.service';
+
 
 
 @Component({
@@ -23,56 +26,28 @@ export class ServiceEqComponent implements OnInit {
     // bread crum data
     breadCrumbItems: Array<{}>;
     // Table data
-    tableData: Table[] = [];
+    tableData: ServiceEq[] = [];
+    tableDataEmploye: User[] = [];
+    sortField: string = '';
+  sortOrder: boolean = true; // true for ascending, false for descending
+
     public selected: any;
     hideme: boolean[] = [];
     tables$: Observable<Table[]>;
+    tablesemp$: Observable<Table[]>;
     total$: Observable<number>;
     editableTable: any;
   
     @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
     public isCollapsed = true;
   
-    constructor(public service: AdvancedService,private serviceEqservice: ServiceEqService ,
+    constructor(public service: AdvancedService,private serviceEqservice: ServiceEqService ,private userservice: UserService,
       private router: Router) {
       this.tables$ = this.service.tables$;
       this.total$ = service.total$;
     }
 
-    settings = {
-      columns: {
-        id: {
-          title: 'ID',
-        },
-        name: {
-          title: 'Full Name',
-          filter: {
-            type: 'list',
-            config: {
-              selectText: 'Select...',
-              list: [
-                { value: 'Glenna Reichert', title: 'Glenna Reichert' },
-                { value: 'Kurtis Weissnat', title: 'Kurtis Weissnat' },
-                { value: 'Chelsey Dietrich', title: 'Chelsey Dietrich' },
-              ],
-            },
-          },
-        },
-        email: {
-          title: 'Email',
-          filter: {
-            type: 'completer',
-            config: {
-              completer: {
-                searchFields: 'email',
-                titleField: 'email',
-              },
-            },
-          },
-        },
-      },
-    };
-  
+   
   
     ngOnInit() {
       this.breadCrumbItems = [{ label: 'Tables' }, { label: 'Advanced Table', active: true }];
@@ -80,6 +55,7 @@ export class ServiceEqComponent implements OnInit {
        * fetch data
        */
       this.getAllEquipes();
+     // this.getAllEmployes();
     }
   
     changeValue(i) {
@@ -91,11 +67,35 @@ export class ServiceEqComponent implements OnInit {
      * fetches the table value
      */
     getAllEquipes() {
-      this.serviceEqservice.getAllServiceEqs().subscribe((res: ServiceEq[]) => {
-        console.log(res);
-        this.tableData = res.map(serviceEq => this.mapServiceEqToTable(serviceEq));
+      
+      this.serviceEqservice.getAllServiceEqs().subscribe((res) => {
+        this.tableData = res;
+        console.log(res)
         this.service.setSearchData(this.tableData); // Call a method to update the search data in the service
         this._fetchData();
+      });
+    }
+    getAllEmployes() {
+      this.userservice.getAllUsers().subscribe((res) => {
+        //sthis.tableDataEmploye = res;
+
+        // Ensure chefEquipe is prioritized
+    this.tableDataEmploye = res.sort((a, b) => {
+      // Ensure chefEquipe is at the top
+      if (a.type === "CHEF_EQUIPE" && b.type !== "CHEF_EQUIPE") {
+        return -1;
+      } else if (a.type !== "CHEF_EQUIPE" && b.type === "CHEF_EQUIPE") {
+        return 1;
+      }
+
+      // Optionally, apply additional sorting logic if needed
+      // For example, sorting alphabetically by name
+      return a.nom && b.nom ? a.nom.localeCompare(b.nom) : 0;
+    });
+        
+        
+        //this.service.setSearchData(this.tableDataEmploye); // Call a method to update the search data in the service
+        //this._fetchData();
       });
     }
      /**
@@ -109,12 +109,7 @@ export class ServiceEqComponent implements OnInit {
     }
   }
 
-    mapServiceEqToTable(serviceEq: ServiceEq): Table {
-      return {
-        nom: serviceEq.nom,
-        chefEquipe: serviceEq.chefEquipe ? serviceEq.chefEquipe.nom : ''
-      };
-    }
+    
   
     /**
      * Sort table data
@@ -131,4 +126,33 @@ export class ServiceEqComponent implements OnInit {
       this.service.sortColumn = column;
       this.service.sortDirection = direction;
     }
+
+    onSortemp(field: string) {
+      this.sortField = field;
+      this.sortOrder = !this.sortOrder; // Inverse l'ordre de tri
+    
+      // Nous n'avons pas besoin d'appeler sortedEmployees ici car il est appelé dans le modèle HTML
+      // via le *ngFor sur les employés triés
+    }
+    
+    sortedEmployees(employees: any[]): any[] {
+      if (!employees) return [];
+    
+      return employees.sort((a, b) => {
+        let valueA: any = a[this.sortField] !== undefined && a[this.sortField] !== null ? a[this.sortField] : '';
+        let valueB: any = b[this.sortField] !== undefined && b[this.sortField] !== null ? b[this.sortField] : '';
+    
+        if (typeof valueA === 'number' && typeof valueB === 'number') {
+          return this.sortOrder ? valueA - valueB : valueB - valueA;
+        } else {
+          valueA = valueA.toString().toLowerCase();
+          valueB = valueB.toString().toLowerCase();
+          if (valueA < valueB) return this.sortOrder ? -1 : 1;
+          if (valueA > valueB) return this.sortOrder ? 1 : -1;
+          return 0;
+        }
+      }).filter(emp => emp.type !== 'CHEF_EQUIPE'); // Exclure le chef d'équipe de la liste triée
+    }
+    
+  
 }

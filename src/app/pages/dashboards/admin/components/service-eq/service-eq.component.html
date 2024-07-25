@@ -1,12 +1,11 @@
 <div class="container-fluid">
-    <app-page-title title="Advanced Table" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <app-page-title title="Advanced Table" ></app-page-title>
     <div class="row">
       <div class="col-12">
         <div class="card">
           <div class="card-body">
             <h4 class="card-title">Advanced Data Table</h4>
             <p class="card-sub-title">
-              Example of datatable.
             </p>
             <div class="row mb-md-2">
               <div class="col-sm-12 col-md-6">
@@ -50,11 +49,12 @@
                       </a>
                     </td>
                     <td>
-                      <ngb-highlight [result]="table.nom" [term]="service.searchTerm"></ngb-highlight>
+                      <ngb-highlight [result]="table? table.nom :'N/A'" [term]="service.searchTerm"></ngb-highlight>
                     </td>
                     <td>
-                      <ngb-highlight [result]="table.chefEquipe" [term]="service.searchTerm"></ngb-highlight>
+                      <ngb-highlight [result]="table.chefEquipe ? table.chefEquipe.nom :'N/A'" [term]="service.searchTerm"></ngb-highlight>
                     </td>
+                    
                     
                     <td>
                       <div ngbDropdown placement="bottom-left">
@@ -75,19 +75,32 @@
                       <table class="table mb-0 table-striped">
                         <thead class="bg-dark text-white">
                           <tr>
-                            <th>CountryName</th>
-                            <th>Price/Unit</th>
-                            <th>Sales Account</th>
-                            <th>Buy Account</th>
-  
+                            <th (click)="onSortemp('identifiantUser')">Identifiant</th>
+                            <th (click)="onSortemp('nom')">Nom</th>
+                            <th (click)="onSortemp('prenom')">Prenom</th>
+                            <th (click)="onSortemp('mdp')">Mot de passe</th>
+                            <th (click)="onSortemp('type')">Type</th>
+                            <th (click)="onSortemp('poste')">Poste</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let table of tables$ | async; let i = index">
-                            <td>{{table.name}}</td>
-                            <td>{{table.name}}</td>
-                            <td>{{table.name}}</td>
-                            <td>{{table.name}}</td>
+                          <tr *ngIf="table.chefEquipe">
+                            <td><strong>{{table.chefEquipe.identifiantUser}}</strong></td>
+                            <td><strong>{{table.chefEquipe.nom}}</strong></td>
+                            <td><strong>{{table.chefEquipe.prenom}}</strong></td>
+                            <td><strong>{{table.chefEquipe.mdp}}</strong></td>
+                            <td><strong>{{table.chefEquipe.type ? table.chefEquipe.type : 'N/A'}}</strong></td>
+                            <td><strong>{{table.chefEquipe.poste ? table.chefEquipe.poste.nom : 'N/A'}}</strong></td>
+                          </tr>
+                          <tr *ngFor="let employee of sortedEmployees(table.employes)">
+
+                            <td>{{employee.identifiantUser}}</td>
+                            <td>{{employee.nom}}</td>
+                            <td>{{employee.prenom}}</td>
+                            <td>{{employee.mdp}}</td>
+                            <td>{{employee.type ? employee.type : 'N/A'}}</td>
+                            <td>{{employee.poste ? employee.poste.nom : 'N/A'}}</td>
+
                           </tr>
                         </tbody>
                       </table>

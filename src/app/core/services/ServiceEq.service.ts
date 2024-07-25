@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ServiceEq } from '../model/ServiceEq';
+import { ServiceEq } from '../models/ServiceEq';
 
 @Injectable({
   providedIn: 'root'

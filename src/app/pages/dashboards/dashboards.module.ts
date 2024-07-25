@@ -16,11 +16,12 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 
 import { ChefDequipeComponent } from './admin/components/chef-dequipe/chef-dequipe.component';
 import { ServiceEqComponent } from './admin/components/service-eq/service-eq.component';
-import { EmployeComponent } from './admin/components/employe/employe.component';
 import { AdvancedSortableDirective } from './admin/components/service-eq/advanced-sortable.directive';
+import { EmployeComponent } from './admin/components/employe/employe-list/employe.component';
+import { AddEmployeComponent } from './admin/components/employe/add-employe/add-employe.component';
 
 @NgModule({
-  declarations: [  ChefDequipeComponent, ServiceEqComponent, EmployeComponent,AdvancedSortableDirective],
+  declarations: [  ChefDequipeComponent, ServiceEqComponent, EmployeComponent,AdvancedSortableDirective, AddEmployeComponent],
   imports: [
     CommonModule,
     FormsModule,

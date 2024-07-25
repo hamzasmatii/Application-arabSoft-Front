@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceEqComponent } from './admin/components/service-eq/service-eq.component';
-import { EmployeComponent } from './admin/components/employe/employe.component';
 import { ChefDequipeComponent } from './admin/components/chef-dequipe/chef-dequipe.component';
+import { EmployeComponent } from './admin/components/employe/employe-list/employe.component';
+import { AddEmployeComponent } from './admin/components/employe/add-employe/add-employe.component';
 
 
 
@@ -17,7 +18,13 @@ const routes: Routes = [
     },
     {path: 'chefdequipe', 
         component: ChefDequipeComponent
+    },{path: 'addempl', 
+        component: AddEmployeComponent
     },
+    {path: 'addempl/:id', 
+        component: AddEmployeComponent
+    },
+
 ];
 
 @NgModule({

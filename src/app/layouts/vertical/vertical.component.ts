@@ -1,9 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
-import { EventService } from '../../core/services/event.service';
 
 import { SIDEBAR_TYPE } from "../layouts.model";
+import { EventService } from 'src/app/core/services/event.service';
 
 @Component({
   selector: 'app-vertical',

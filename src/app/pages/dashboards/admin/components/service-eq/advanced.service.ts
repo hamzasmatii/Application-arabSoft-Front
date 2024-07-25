@@ -42,7 +42,7 @@ function sort(tables: Table[], column: string, direction: string): Table[] {
  */
 function matches(tables: Table, term: string, pipe: PipeTransform) {
     return tables.nom?.toLowerCase().includes(term.toLowerCase())
-        || tables.chefEquipe?.toLowerCase().includes(term.toLowerCase());
+        ;
 }
 
 @Injectable({
@@ -140,4 +140,5 @@ export class AdvancedService {
         this.tableData = tableData;
         this._search$.next();
     }
+   
 }

@@ -1,0 +1,159 @@
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <app-page-title title="Form Validation"></app-page-title>
+    <!-- end page title -->
+  
+    
+  
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">Employe</h4>
+            <p class="card-title-desc">
+             
+            </p>
+            <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+              <div class="mb-3">
+                <label class="form-label">Nom</label>
+                <input type="text" class="form-control" formControlName="nom"
+                  [ngClass]="{'is-invalid': typesubmit && type.nom.errors}" [(ngModel)]="currentEmploye.nom"  placeholder="Type something" />
+                <div *ngIf="typesubmit && type.nom.errors" class="invalid-feedback">
+                  <span *ngIf="type.nom.errors.required">This value is required.</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Prenom</label>
+                <input type="text" class="form-control" formControlName="prenom"
+                  [ngClass]="{'is-invalid': typesubmit && type.prenom.errors}" [(ngModel)]="currentEmploye.prenom" placeholder="Type something" />
+                <div *ngIf="typesubmit && type.prenom.errors" class="invalid-feedback">
+                  <span *ngIf="type.prenom.errors.required">This value is required.</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Mot de passe</label>
+                <input type="text" class="form-control" formControlName="mdp"
+                  [ngClass]="{'is-invalid': typesubmit && type.mdp.errors}" [(ngModel)]="currentEmploye.mdp" placeholder="Type something" />
+                <div *ngIf="typesubmit && type.mdp.errors" class="invalid-feedback">
+                  <span *ngIf="type.mdp.errors.required">This value is required.</span>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">E-Mail</label>
+                <div>
+                  <input type="email" class="form-control" formControlName="email"
+                    [ngClass]="{'is-invalid': typesubmit && type.email.errors}" [(ngModel)]="currentEmploye.email" placeholder="Enter a valid e-mail" />
+                  <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
+                    <span *ngIf="type.email.errors.required">This value is required.</span>
+                    <span *ngIf="type.email.errors.pattern">This value should be a valid email.</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Number</label>
+                <div>
+                  <input formControlName="number" type="number" class="form-control"
+                    [ngClass]="{'is-invalid': typesubmit && type.number.errors}" [(ngModel)]="currentEmploye.number" placeholder="Enter only numbers">
+                  <div *ngIf="typesubmit && type.number.errors" class="invalid-feedback">
+                    <span *ngIf="type.number.errors.required">This value is required.</span>
+                    <span *ngIf="type.number.errors.pattern">This value should be a valid number.</span>
+                  </div>
+                </div>
+              </div>
+             
+              <div class="mb-3">
+                <label class="form-label">Poste : </label>
+                <span class="badge bg-primary">  Poste</span>
+                <div>
+                    <button type="button" class="btn btn-primary" (click)="openModal(content)">Ajouter poste</button>
+                </div>
+              </div>
+                <div class="mb-3">
+                <label class="form-label">Service  : </label>
+                <span class="badge bg-primary">  Service</span>
+            </div>
+                <div class="mb-3">
+                    
+
+                  <div class="btn-group me-1 mt-2" ngbDropdown>
+                    <button type="button" class="btn btn-primary dropdown-toggle" ngbDropdownToggle>Service <i
+                        class="mdi mdi-chevron-down"></i></button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <a class="dropdown-item" href="javascript: void(0);">Action</a>
+                      <a class="dropdown-item" href="javascript: void(0);">Another action</a>
+                      <a class="dropdown-item" href="javascript: void(0);">Something else here</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="javascript: void(0);">Separated link</a>
+                    </div>
+                  </div><!-- /btn-group -->
+                </div>
+  
+                <!-- Modal Open -->
+                <ng-template #content role="document" let-modal>
+                    <div class="modal-header">
+                        <h5 class="modal-title mt-0">Poste</h5>
+                        <button type="button" class="btn-close" aria-hidden="true"
+                            (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nom poste</label>
+                                        <input type="text" class="form-control" id="name" placeholder="Enter Nom">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="subject" class="form-label">Description</label>
+                                <textarea class="form-control" id="subject" rows="3"></textarea>
+                            </div>
+                            <div class="mb-4">
+                                <div class="mb-3" [formGroup]="competanceData">
+                                  <div formArrayName="competanceValue">
+                                    <label class="form-label">Competance no :</label>
+                                    <div class="inner mb-3 row" *ngFor="let data1 of  competancedata().controls; let i=index;"
+                                      [formGroupName]="i">
+                                      <div class="col-md-10 col-8">
+                                        <input type="text" class="inner form-control" formControlName="competancenumber"
+                                          placeholder="Enter your competance no...">
+                                      </div>
+                                      <div class="col-md-2 col-4">
+                                        <div class="d-grid">
+                                          <input type="button" class="btn btn-primary inner" value="Delete" (click)="deleteCompetance(i)">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <input type="button" class="btn btn-success inner" value="Ajouter Competance" (click)="addCompetance()">
+                              </div>
+                              
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </ng-template>
+
+             
+              <div class="d-flex flex-wrap gap-2">
+                <button type="submit" class="btn btn-primary waves-effect waves-light">
+                    Submit
+                </button>
+                <button type="reset" class="btn btn-secondary waves-effect" (click)="cancelBut()">
+                    Cancel
+                </button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  
+     
+    </div>
+  </div>
+  
