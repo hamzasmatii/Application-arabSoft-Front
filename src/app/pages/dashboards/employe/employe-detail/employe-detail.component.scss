@@ -1,0 +1,49 @@
+
+// Chart Container Styles
+.chartjs-chart {
+    // Specifies the height of the chart container
+    height: 300px; // You can adjust this height based on your needs
+  
+    // Ensures that the chart container takes up the full width of its parent container
+    width: 118%;
+  
+   
+  }
+  .d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.justify-content-start {
+    justify-content: flex-start;
+}
+
+.mb-2 {
+    margin-bottom: 15px; /* Space between rows of icons on smaller screens */
+}
+
+.p-3 {
+    padding: 15px; /* Space around each radio button group */
+}
+
+.form-check {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+}
+
+.form-check-input {
+    margin-top: 5px; /* Space between the icon and the radio button */
+}
+
+.form-check-label {
+    margin-top: 5px; /* Space between the radio button and the label */
+}
+
+.mt-3 {
+    margin-top: 15px; /* Space above the submit button */
+}
+
+.icon-adjust {
+    margin-left: -5px; /* Move icon 5px to the left */
+}

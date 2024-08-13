@@ -1,159 +1,233 @@
 <div class="container-fluid">
 
-    <!-- start page title -->
-    <app-page-title title="Form Validation"></app-page-title>
-    <!-- end page title -->
-  
-    
-  
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">Employe</h4>
-            <p class="card-title-desc">
-             
-            </p>
-            <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
-              <div class="mb-3">
-                <label class="form-label">Nom</label>
-                <input type="text" class="form-control" formControlName="nom"
-                  [ngClass]="{'is-invalid': typesubmit && type.nom.errors}" [(ngModel)]="currentEmploye.nom"  placeholder="Type something" />
-                <div *ngIf="typesubmit && type.nom.errors" class="invalid-feedback">
-                  <span *ngIf="type.nom.errors.required">This value is required.</span>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Prenom</label>
-                <input type="text" class="form-control" formControlName="prenom"
-                  [ngClass]="{'is-invalid': typesubmit && type.prenom.errors}" [(ngModel)]="currentEmploye.prenom" placeholder="Type something" />
-                <div *ngIf="typesubmit && type.prenom.errors" class="invalid-feedback">
-                  <span *ngIf="type.prenom.errors.required">This value is required.</span>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Mot de passe</label>
-                <input type="text" class="form-control" formControlName="mdp"
-                  [ngClass]="{'is-invalid': typesubmit && type.mdp.errors}" [(ngModel)]="currentEmploye.mdp" placeholder="Type something" />
-                <div *ngIf="typesubmit && type.mdp.errors" class="invalid-feedback">
-                  <span *ngIf="type.mdp.errors.required">This value is required.</span>
-                </div>
-              </div>
-              
-              <div class="mb-3">
-                <label class="form-label">E-Mail</label>
-                <div>
-                  <input type="email" class="form-control" formControlName="email"
-                    [ngClass]="{'is-invalid': typesubmit && type.email.errors}" [(ngModel)]="currentEmploye.email" placeholder="Enter a valid e-mail" />
-                  <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
-                    <span *ngIf="type.email.errors.required">This value is required.</span>
-                    <span *ngIf="type.email.errors.pattern">This value should be a valid email.</span>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">Number</label>
-                <div>
-                  <input formControlName="number" type="number" class="form-control"
-                    [ngClass]="{'is-invalid': typesubmit && type.number.errors}" [(ngModel)]="currentEmploye.number" placeholder="Enter only numbers">
-                  <div *ngIf="typesubmit && type.number.errors" class="invalid-feedback">
-                    <span *ngIf="type.number.errors.required">This value is required.</span>
-                    <span *ngIf="type.number.errors.pattern">This value should be a valid number.</span>
-                  </div>
-                </div>
-              </div>
-             
-              <div class="mb-3">
-                <label class="form-label">Poste : </label>
-                <span class="badge bg-primary">  Poste</span>
-                <div>
-                    <button type="button" class="btn btn-primary" (click)="openModal(content)">Ajouter poste</button>
-                </div>
-              </div>
-                <div class="mb-3">
-                <label class="form-label">Service  : </label>
-                <span class="badge bg-primary">  Service</span>
-            </div>
-                <div class="mb-3">
-                    
+  <!-- start page title -->
+  <app-page-title title="Form Validation"></app-page-title>
+  <!-- end page title -->
 
-                  <div class="btn-group me-1 mt-2" ngbDropdown>
-                    <button type="button" class="btn btn-primary dropdown-toggle" ngbDropdownToggle>Service <i
-                        class="mdi mdi-chevron-down"></i></button>
-                    <div class="dropdown-menu" ngbDropdownMenu>
-                      <a class="dropdown-item" href="javascript: void(0);">Action</a>
-                      <a class="dropdown-item" href="javascript: void(0);">Another action</a>
-                      <a class="dropdown-item" href="javascript: void(0);">Something else here</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="javascript: void(0);">Separated link</a>
-                    </div>
-                  </div><!-- /btn-group -->
-                </div>
   
-                <!-- Modal Open -->
-                <ng-template #content role="document" let-modal>
-                    <div class="modal-header">
-                        <h5 class="modal-title mt-0">Poste</h5>
-                        <button type="button" class="btn-close" aria-hidden="true"
-                            (click)="modal.dismiss('Cross click')"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Nom poste</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Enter Nom">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Description</label>
-                                <textarea class="form-control" id="subject" rows="3"></textarea>
-                            </div>
-                            <div class="mb-4">
-                                <div class="mb-3" [formGroup]="competanceData">
-                                  <div formArrayName="competanceValue">
-                                    <label class="form-label">Competance no :</label>
-                                    <div class="inner mb-3 row" *ngFor="let data1 of  competancedata().controls; let i=index;"
-                                      [formGroupName]="i">
-                                      <div class="col-md-10 col-8">
-                                        <input type="text" class="inner form-control" formControlName="competancenumber"
-                                          placeholder="Enter your competance no...">
-                                      </div>
-                                      <div class="col-md-2 col-4">
-                                        <div class="d-grid">
-                                          <input type="button" class="btn btn-primary inner" value="Delete" (click)="deleteCompetance(i)">
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <input type="button" class="btn btn-success inner" value="Ajouter Competance" (click)="addCompetance()">
-                              </div>
-                              
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </ng-template>
 
-             
-              <div class="d-flex flex-wrap gap-2">
-                <button type="submit" class="btn btn-primary waves-effect waves-light">
-                    Submit
-                </button>
-                <button type="reset" class="btn btn-secondary waves-effect" (click)="cancelBut()">
-                    Cancel
-                </button>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="btn-group me-1 mt-2" ngbDropdown>
+            <button type="button" class="btn btn-primary dropdown-toggle" ngbDropdownToggle>
+              {{ user?.type || 'Select Type User' }} <i class="mdi mdi-chevron-down"></i>
+            </button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                
+              <a *ngFor="let item of userTypes" class="dropdown-item pointer" (click)="selectTypeUser(item)">{{ item }}</a>
+              <div class="dropdown-divider"></div>
             </div>
-            </form>
           </div>
+          <h4 class="card-title" *ngIf="user.type == UserType.CHEF_EQUIPE">
+            Chef d'équipe
+          </h4>
+          <h4 class="card-title" *ngIf="user.type == UserType.EMPLOYE">
+            Employe
+          </h4>
+          <p class="card-title-desc">
+           
+          </p>
+          <form (ngSubmit)="typeSubmit()" [formGroup]="typeValidationForm">
+            <div class="mb-3">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control" formControlName="nom"
+                [ngClass]="{'is-invalid': typesubmit && type.nom.errors}" [(ngModel)]="user.nom"  placeholder="Type something" />
+              <div *ngIf="typesubmit && type.nom.errors" class="invalid-feedback">
+                <span *ngIf="type.nom.errors.required">This value is required.</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prenom</label>
+              <input type="text" class="form-control" formControlName="prenom"
+                [ngClass]="{'is-invalid': typesubmit && type.prenom.errors}" [(ngModel)]="user.prenom" placeholder="Type something" />
+              <div *ngIf="typesubmit && type.prenom.errors" class="invalid-feedback">
+                <span *ngIf="type.prenom.errors.required">This value is required.</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Mot de passe</label>
+              <input type="text" class="form-control" formControlName="mdp"
+                [ngClass]="{'is-invalid': typesubmit && type.mdp.errors}" [(ngModel)]="user.mdp" placeholder="Type something" />
+              <div *ngIf="typesubmit && type.mdp.errors" class="invalid-feedback">
+                <span *ngIf="type.mdp.errors.required">This value is required.</span>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">E-Mail</label>
+              <div>
+                <input type="email" class="form-control" formControlName="email"
+                  [ngClass]="{'is-invalid': typesubmit && type.email.errors}" [(ngModel)]="user.email" placeholder="Enter a valid e-mail" />
+                <div *ngIf="typesubmit && type.email.errors" class="invalid-feedback">
+                  <span *ngIf="type.email.errors.required">This value is required.</span>
+                  <span *ngIf="type.email.errors.pattern">This value should be a valid email.</span>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3" >
+              <label class="form-label">Number</label>
+              <div>
+                <input formControlName="number" type="number" class="form-control"
+                  [ngClass]="{'is-invalid': typesubmit && type.number.errors}" [(ngModel)]="user.number" placeholder="Enter only numbers">
+                <div *ngIf="typesubmit && type.number.errors" class="invalid-feedback">
+                  <span *ngIf="type.number.errors.required">This value is required.</span>
+                  <span *ngIf="type.number.errors.pattern">This value should be a valid number.</span>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="user.type == UserType.EMPLOYE">
+              <div class="col-lg-4">
+                <div class="card border border-primary">
+                  <div class="card-header bg-transparent border-primary">
+                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow mr-3"></i>Poste :</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title mt-0"><h4>{{this.SelcetedPoste.nom ?this.SelcetedPoste.nom:'Aucun poste'}} </h4></h5>
+                    <div>
+                      <button type="button" class="btn btn-primary" (click)="openModal(content,this.idPoste)">{{this.posteUser.nom ?'Modifier poste':'Ajouter poste'}}</button>
+                      <button *ngIf="this.posteUser?.id" type="button" class="btn btn-danger ms-2" >
+                        Supprimer poste
+                    </button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            
+            
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="card border border-primary">
+                  <div class="card-header bg-transparent border-primary">
+                    <h5 class="my-0 text-primary"><i class="mdi mdi-bullseye-arrow mr-3"></i>Service  :</h5>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title mt-0" *ngIf="user.type == UserType.CHEF_EQUIPE"> {{this.user.chefEquipeService?  this.user.chefEquipeService.nom:'N/A'}}</h5>
+                    <h5 class="card-title mt-0" *ngIf="user.type == UserType.EMPLOYE"> {{this.selectedServiceName?.nom ? this.selectedServiceName.nom:'N/A'}}</h5>
+                    <div class="btn-group me-1 mt-2" ngbDropdown>
+                      <button type="button" class="btn btn-primary dropdown-toggle" ngbDropdownToggle>
+                        {{ selectedServiceName?.nom || 'Select a Service' }} <i class="mdi mdi-chevron-down"></i>
+                      </button>
+                      <div class="dropdown-menu" ngbDropdownMenu>
+                          <a class="dropdown-item pointer" (click)="DontselectService()">Aucun service</a> <!-- Option "Aucune équipe" -->
+                          
+                        <a *ngFor="let item of equipe" class="dropdown-item pointer" (click)="selectService(item)">{{ item.nom }}</a>
+                        <div class="dropdown-divider"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+          
+
+            
+            
+           
+            <div class="d-flex flex-wrap gap-2">
+              <button type="submit" class="btn btn-primary waves-effect waves-light">
+                  Submit
+              </button>
+              <button type="reset" class="btn btn-secondary waves-effect" (click)="cancelBut()">
+                  Cancel
+              </button>
+          </div>
+          </form>
         </div>
       </div>
-  
-     
     </div>
+
+   
   </div>
-  
+</div>
+
+  <!-- Modal Open -->
+  <ng-template #content role="document" let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title mt-0">Poste</h5>
+        <button type="button" class="btn-close" aria-label="Close"
+                        (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="mb-5">
+                        <label for="poste" class="form-label">Poste : {{this.SelcetedPoste?.nom ? this.SelcetedPoste.nom:'N/A'}} </label>
+                          <br>
+                          <div class="btn-group me-1 mt-2" ngbDropdown>
+                            <button type="button" class="btn btn-primary dropdown-toggle" ngbDropdownToggle>
+                              {{ SelcetedPoste?.nom || "Select un Poste" }} <i class="mdi mdi-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" ngbDropdownMenu>
+                              
+                              <a class="dropdown-item pointer" (click)="DontSelcetedPoste()">Aucun Chef d'equipe</a> <!-- Option "Aucune équipe" -->
+                              <div class="dropdown-divider"></div>
+                              <a *ngFor="let item of Allposte" class="dropdown-item" (click)="selectposte(item)">{{ item.nom }}</a>
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                  
+                  <div class="mb-3">
+                    <div class="card">
+                      <div class="card-body">
+                          
+                          <h4 class="card-title">Competence</h4>
+                          <div class="card-title-desc">
+                            <div class="btn-group me-1 mt-2" ngbDropdown>
+                              <button type="button" class="btn btn-primary dropdown-toggle" ngbDropdownToggle>
+                                Ajouter une competence  <i class="mdi mdi-chevron-down"></i>
+                              </button>
+                              <div class="dropdown-menu" ngbDropdownMenu>
+                                
+                                <div class="dropdown-divider"></div>
+                                <a *ngFor="let item of TableCompetancesForPoste " class="dropdown-item" (click)="selectcompetance(item)">{{ item.nom }}</a>
+                                
+                              </div>
+                            </div>
+                          </div>
+                        <div class="table-responsive">
+                          
+                          <table class="table mb-0">
+                            <thead>
+                              <tr>
+                                <th>Nom</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let competencee of TableCompetancesForUser">
+                                <td>{{competencee.nom}} {{competencee.prenom}}</td>
+                                
+                                <td>
+                                  <div class="button-items">
+                                   
+                                    
+                                    <button type="button" class="btn btn-danger" (click)="removeCompetenceForUser(competencee.id,competencee)">
+                                      <i class="bx bx-trash font-size-16 align-items-center-2"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                
+                            </tbody>
+                          </table>
+                        </div>
+                
+                      </div>
+                    </div>
+                  </div>
+              </div>
+                
+            </div>
+            
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-primary" (click)="modal.dismiss('Cross click')">Submit</button>
+            </div>
+    </div>
+</ng-template>

@@ -12,16 +12,19 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbDropdownModule, NgbTooltipModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap'
 import { SimplebarAngularModule } from 'simplebar-angular';
+import { ChartsModule } from 'ng2-charts';
 
-
-import { ChefDequipeComponent } from './admin/components/chef-dequipe/chef-dequipe.component';
 import { ServiceEqComponent } from './admin/components/service-eq/service-eq.component';
 import { AdvancedSortableDirective } from './admin/components/service-eq/advanced-sortable.directive';
 import { EmployeComponent } from './admin/components/employe/employe-list/employe.component';
 import { AddEmployeComponent } from './admin/components/employe/add-employe/add-employe.component';
+import { EmployeDetailComponent } from './employe/employe-detail/employe-detail.component';
+import { ProfilComponent } from './chefdequipe/profil/profil.component';
+import { ServiceEqDetailComponent } from './chefdequipe/service-eq-detail/service-eq-detail.component';
+import { PosteComponent } from './admin/poste/poste.component';
 
 @NgModule({
-  declarations: [  ChefDequipeComponent, ServiceEqComponent, EmployeComponent,AdvancedSortableDirective, AddEmployeComponent],
+  declarations: [   ServiceEqComponent, EmployeComponent,AdvancedSortableDirective, AddEmployeComponent, EmployeDetailComponent, ProfilComponent, ServiceEqDetailComponent, PosteComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -41,7 +44,8 @@ import { AddEmployeComponent } from './admin/components/employe/add-employe/add-
     NgbCollapseModule,
     NgbDropdownModule,
     FormsModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
+    ChartsModule
   ]
 })
 export class DashboardsModule { }

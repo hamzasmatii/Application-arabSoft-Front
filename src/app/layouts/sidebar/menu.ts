@@ -18,19 +18,19 @@ export const MENU: MenuItem[] = [
             {
                 id: 3,
                 label: 'SERVICE',
-                link: '/dashboard',
+                link: '/dashboard/admin',
                 parentId: 2
             },
             {
                 id: 4,
-                label: 'Chef service',
-                link: '/dashboards/chefdequipe',
+                label: 'EMPLOYE',
+                link: '/dashboard/admin/employe',
                 parentId: 2
             },
             {
                 id: 5,
-                label: 'EMPLOYE',
-                link: '/dashboards/employe',
+                label: 'POSTE',
+                link: '/dashboard/admin/poste',
                 parentId: 2
             },
             
@@ -48,7 +48,7 @@ export const MENU: MenuItem[] = [
             {
                 id: 7,
                 label: 'Profile',
-                link: '/dashboard',
+                link: '/dashboard/',
                 parentId: 6
             },
             {
@@ -73,7 +73,7 @@ export const MENU: MenuItem[] = [
             {
                 id: 11,
                 label: 'Profile',
-                link: '/dashboard',
+                link: '/dashboard/employe/profile',
                 parentId: 10
             },
            

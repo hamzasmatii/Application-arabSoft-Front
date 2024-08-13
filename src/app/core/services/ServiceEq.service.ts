@@ -30,4 +30,12 @@ export class ServiceEqService {
   deleteServiceEq(serviceEqId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${serviceEqId}`);
   }
+
+  getServiceEqByUserId(userId: number): Observable<ServiceEq> {
+    return this.http.get<ServiceEq>(`${this.apiUrl}/user/${userId}`);
+  }
+  
+  getServiceEqByChefId(userId: number): Observable<ServiceEq> {
+    return this.http.get<ServiceEq>(`${this.apiUrl}/chef/${userId}`);
+  }
 }

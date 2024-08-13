@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evaluation } from '../models/Evaluation';
+import { EvaluationType } from '../models/EvaluationType';
 
 @Injectable({
   providedIn: 'root'
@@ -30,4 +31,42 @@ export class EvaluationService {
   deleteEvaluation(evaluationId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${evaluationId}`);
   }
+
+  findEvaluationsUserbyType(userId: number, compId: number, evalu: EvaluationType): Observable<Evaluation[]> {
+    let params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('compId', compId.toString())
+      .set('eval', evalu);
+
+    return new Observable<Evaluation[]>(observer => {
+      this.http.get<Evaluation[]>(`${this.apiUrl}/find-user-competence`, { params })
+        .subscribe({
+          next: (data) => observer.next(data),
+          error: (err: HttpErrorResponse) => {
+            console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+            observer.error('Something went wrong; please try again later.');
+          },
+          complete: () => observer.complete()
+        });
+    });
+  }
+
+  findallEvaluationsUserandcompet(userId: number, compId: number): Observable<Evaluation[]> {
+    let params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('compId', compId.toString());
+
+    return new Observable<Evaluation[]>(observer => {
+      this.http.get<Evaluation[]>(`${this.apiUrl}/find-user-allcompetence`, { params })
+        .subscribe({
+          next: (data) => observer.next(data),
+          error: (err: HttpErrorResponse) => {
+            console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+            observer.error('Something went wrong; please try again later.');
+          },
+          complete: () => observer.complete()
+        });
+    });
+  }
+
 }

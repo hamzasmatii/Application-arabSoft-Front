@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/User';
+import { ServiceEq } from '../models/ServiceEq';
+import { JobPosition } from '../models/JobPosition';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +35,7 @@ export class UserService {
   deleteUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }
+  
 
   login(email: string, password: string): Observable<boolean> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
@@ -61,4 +64,27 @@ export class UserService {
   isAuthenticated(): boolean {
     return !!this.userRole;
   }
+
+  getServiceEqByUserId(userId: number): Observable<ServiceEq> {
+    return this.http.get<ServiceEq>(`${this.apiUrl}/service/${userId}`);
+  }
+
+  getChefsWithoutService(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/chefs-without-service`);
+  }
+
+  getUsersWithoutService(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/without-service`);
+  }
+
+  findUsersByServiceEqId(eqId: number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/liste-users-service/${eqId}`);
+  }
+
+  getJobPositionForUser(userId: number): Observable<JobPosition> {
+    return this.http.get<JobPosition>(`${this.apiUrl}/job-position/${userId}`);
+  }
+
+
+
 }

@@ -14,17 +14,16 @@ export const MENU: MenuItem[] = [
             },
             {
                 id: 3,
-                label: 'Chef service',
-                link: '/dashboards/chefdequipe',
-                parentId: 1
-            },
-            {
-                id: 4,
                 label: 'Employe',
                 link: '/dashboards/employe',
                 parentId: 1
             },
-            
+            {
+                id: 4,
+                label: 'POSTE',
+                link: '/dashboard/admin/poste',
+                parentId: 2
+            },
         ]
     },
     {

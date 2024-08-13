@@ -30,4 +30,8 @@ export class CompetenceService {
   deleteCompetence(competenceId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${competenceId}`);
   }
+
+  getCompetencesByJobPositionId(jobPositionId: number): Observable<Competence[]> {
+    return this.http.get<Competence[]>(`${this.apiUrl}/by-poste/${jobPositionId}`);
+  }
 }

@@ -1,3 +1,4 @@
+import { Evaluation } from './Evaluation';
 import { JobPosition } from './JobPosition';
 import { ServiceEq } from './ServiceEq';
 import { UserType } from './UserType';
@@ -11,8 +12,9 @@ export class User {
     prenom?: string;
     mdp?: string;
     type?: UserType;
-    poste?: JobPosition;
     serviceEq?: ServiceEq;
+    chefEquipeService?:ServiceEq;
+    evaluations?:Evaluation;
 
 
    

@@ -4,12 +4,12 @@ import { ServiceEqComponent } from './dashboards/admin/components/service-eq/ser
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'dashboard' },
- 
-  { path: 'dashboard', component: ServiceEqComponent },
-  { path: 'dashboards', loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule) },
-
- 
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboards/dashboards.module').then(m => m.DashboardsModule)
+  },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+  // Other routes if needed
 ];
 
 @NgModule({
