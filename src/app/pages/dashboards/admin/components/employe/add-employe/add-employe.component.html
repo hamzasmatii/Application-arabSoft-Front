@@ -86,8 +86,8 @@
                   <div class="card-body">
                     <h5 class="card-title mt-0"><h4>{{this.SelcetedPoste.nom ?this.SelcetedPoste.nom:'Aucun poste'}} </h4></h5>
                     <div>
-                      <button type="button" class="btn btn-primary" (click)="openModal(content,this.idPoste)">{{this.posteUser.nom ?'Modifier poste':'Ajouter poste'}}</button>
-                      <button *ngIf="this.posteUser?.id" type="button" class="btn btn-danger ms-2" >
+                      <button type="button" class="btn btn-primary" (click)="openModal(content,this.idPoste)">{{this.SelcetedPoste.nom ?'Modifier poste':'Ajouter poste'}}</button>
+                      <button *ngIf="this.posteUser?.id" type="button" class="btn btn-danger ms-2" (click)="deleteEvaluationsByUser()">
                         Supprimer poste
                     </button>
                   </div>

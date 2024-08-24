@@ -46,7 +46,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
    
     HttpClientModule,
     UIModule,
-  
+    FullCalendarModule,
     
     WidgetModule,
     FullCalendarModule,

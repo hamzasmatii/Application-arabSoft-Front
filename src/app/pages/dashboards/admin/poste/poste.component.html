@@ -55,7 +55,7 @@
                     </td>
                     
                     <td >
-                      <ngb-highlight [result]="table?.nom || 'N/A'" [term]="service.searchTerm"   ></ngb-highlight>
+                      <ngb-highlight [result]="table?.nom || 'N/A'" [term]="service.searchTerm"  (click)="posteDetails(table.id)" ></ngb-highlight>
                     </td>
                  
                     <td>

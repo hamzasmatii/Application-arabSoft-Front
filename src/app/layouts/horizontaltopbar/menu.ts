@@ -24,6 +24,12 @@ export const MENU: MenuItem[] = [
                 link: '/dashboard/admin/poste',
                 parentId: 2
             },
+            {
+                id: 5,
+                label: 'FORMATION',
+                link: '/dashboard/admin/calendrier',
+                parentId: 2
+            },
         ]
     },
     {

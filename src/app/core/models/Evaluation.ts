@@ -7,7 +7,8 @@ export class Evaluation {
     eval?: EvaluationType;
     competence?:Competence;
     note?:number;
-    user : User;
+    user? : User;
+    dateEvalu?:Date;
 
     
 }

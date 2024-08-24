@@ -31,7 +31,7 @@
                 novalidate>
                 <div class="mb-3">
                   <label for="email">Matricule</label>
-                  <input type="text" class="form-control" name="matriculeP" required formControlName="matriculeP"
+                  <input type="text" class="form-control" name="matriculeP"  formControlName="matriculeP"
                     placeholder="Entrer votre matricule" />
                 </div>
 
@@ -39,7 +39,7 @@
                   <label for="password">Mot de passe</label>
                   <div class="input-group auth-pass-inputgroup">
                     <input input type="password" class="form-control" name="password" formControlName="password"
-                      required minlength="6" placeholder="Entrer votre mot de passe" />
+                       placeholder="Entrer votre mot de passe" />
                     <div class="invalid-feedback"></div>
                   </div>
                 </div>
@@ -58,12 +58,7 @@
           </div>
         </div>
         <div class="mt-5 text-center">
-          <p>
-            Vous n'avez pas de compte ?
-            <a routerLink="/account/signup" class="fw-medium text-primary">
-              Inscription
-            </a>
-          </p>
+         
           <p>© {{year}} Dévlopper avec <i class="mdi mdi-heart text-danger"></i> par ArabSoft</p>
         </div>
 

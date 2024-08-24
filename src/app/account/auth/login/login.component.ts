@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
-import { AuthfakeauthenticationService } from '../../../core/services/authfake.service';
+
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 import Swal from 'sweetalert2';
-import { TokenStorage } from 'src/app/core/services/tokenservice.service';
-import { Auth2Service } from 'src/app/core/services/auth2.service';
+import { UserService } from 'src/app/core/services/User.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -22,9 +21,8 @@ import { Auth2Service } from 'src/app/core/services/auth2.service';
  * Login component
  */
 export class LoginComponent implements OnInit {
-  errr: string
-
-  form: FormGroup
+  errr: string;
+  form: FormGroup;
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
@@ -32,62 +30,53 @@ export class LoginComponent implements OnInit {
   year: number = new Date().getFullYear();
 
   constructor(
-    private authService: Auth2Service,
-    private tokenStorage: TokenStorage,
+    private authService: UserService, // Inject your AuthService
     private route: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,private http: HttpClient
   ) { }
 
   ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
-    }
-
     this.form = this.fb.group({
       matriculeP: [""],
       password: [""]
-    })
+    });
   }
 
   onSubmit(): void {
+    if (this.form.invalid) {
+      return;
+    }
 
+    const { matriculeP, password } = this.form.value;
 
+    this.authService.login(matriculeP, password).subscribe(
+      success => {
+        if (success) {
+          this.isLoggedIn = true;
+          this.isLoginFailed = false;
 
-    this.authService.login(this.form.value).subscribe(
-      (data) => {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUser(data);
-        // localStorage.setItem("us",username);
-        this.route.navigate(["/dashboard"])
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
+          const role = this.authService.getRole();
+          const idUser = this.authService.getIduser();
 
-        if (data) {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Bienvenu à notre espace ' + this.tokenStorage.getUser().role_portail,
-            showConfirmButton: false,
-            timer: 3000
-          });
+          // Redirect based on user role
+          if (role === 'ADMIN') {
+            this.route.navigate(['/dashboard/admin/serviceEq']);
+          } else if (role === 'CHEF_EQUIPE') {
+            this.route.navigate(['/dashboard/chefdequipe/profile/' + idUser]);
+          } else if (role === 'EMPLOYE') {
+            this.route.navigate(['/dashboard/employe/profile/' + idUser]);
+          }
+        } else {
+          this.isLoginFailed = true;
+          this.errr = 'Invalid credentials';
         }
-
-
-
-
-        /* this.toast.success({
-           detail: ' Success Message',
-           summary: data.message,
-           duration: 5000,
-         });*/
       },
-      (err) => {
-        this.errr = "Veuillez vérifier votre matricule ou mot de passe"
+      error => {
+        this.isLoginFailed = true;
+        this.errr = 'An error occurred during login';
       }
     );
   }
-
   reloadPage(): void {
     window.location.reload();
   }

@@ -11,6 +11,7 @@ import { JobPosition } from '../models/JobPosition';
 })
 export class UserService {
   private userRole: string;
+  private idUser:number;
 
   private apiUrl = 'http://localhost:8085/api/user';
 
@@ -37,20 +38,24 @@ export class UserService {
   }
   
 
-  login(email: string, password: string): Observable<boolean> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
-      .pipe(map(response => {
+  login(matriculeP: string, password: string): Observable<boolean> {
+    return this.http.post<any>(`${this.apiUrl}/login`, {
+      identifiantUser: matriculeP,
+      mdp: password
+    }).pipe(
+      map(response => {
         if (response.message === 'Login successful') {
           this.userRole = response.role;
+          this.idUser = response.id;
           return true;
         } else {
           return false;
         }
-      }));
+      })
+    );
   }
-
   logout(): Observable<void> {
-    return this.http.get<void>(`${this.apiUrl}/logout`, { withCredentials: true }).pipe(
+    return this.http.get<void>(`${this.apiUrl}/logout`).pipe(
       map(() => {
         this.userRole = null;
       })
@@ -59,6 +64,10 @@ export class UserService {
 
   getRole(): string {
     return this.userRole;
+  }
+
+  getIduser(): number {
+    return this.idUser;
   }
 
   isAuthenticated(): boolean {
@@ -85,6 +94,11 @@ export class UserService {
     return this.http.get<JobPosition>(`${this.apiUrl}/job-position/${userId}`);
   }
 
+  getUsersByFormation(formationId: number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/by-formation/${formationId}`);
+  }
+
+  
 
 
 }

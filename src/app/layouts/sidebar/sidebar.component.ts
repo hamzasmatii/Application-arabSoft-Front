@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { MENU } from './menu';
 import { MenuItem } from './menu.model';
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from 'src/app/core/services/User.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -25,10 +26,13 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   data: any;
 
   menuItems = [];
+  role: string;
+  userId: number = this.authService.getIduser();
+
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
 
-  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient) {
+  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient,private authService: UserService) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
@@ -38,6 +42,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    this.role = this.authService.getRole(); // Get the user's role
+
     this.initialize();
     this._scrollElement();
   }
@@ -139,9 +145,34 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    * Initialize
    */
   initialize(): void {
-    this.menuItems = MENU;
+    // Filter and initialize the menu based on the role
+    this.menuItems = MENU.filter(item => {
+      if (this.role === 'CHEF_EQUIPE') {
+        // Menu items for CHEF_EQUIPE
+        return item.id === 6;
+      } else if (this.role === 'ADMIN') {
+        // Menu items for admin
+        return item.id === 2;
+      } else if (this.role === 'EMPLOYE') {
+        // Menu items for employe
+        return item.id === 10;
+      }
+      // Default case for any role not specified
+      return false;
+    }).map(item => {
+      // Replace '{{idUser}}' in links with actual user ID
+      if (item.subItems) {
+        item.subItems = item.subItems.map(subItem => {
+          if (subItem.link.includes('{{idUser}}')) {
+            subItem.link = subItem.link.replace('{{idUser}}', this.userId.toString());
+          }
+          return subItem;
+        });
+      }
+      return item;
+    });
   }
-
+  
   /**
    * Returns true or false if given menu item has child or not
    * @param item menuItem

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddChefDequipeComponent } from './add-chef-dequipe.component';
+import { PosteDetailComponent } from './poste-detail.component';
 
-describe('AddChefDequipeComponent', () => {
-  let component: AddChefDequipeComponent;
-  let fixture: ComponentFixture<AddChefDequipeComponent>;
+describe('PosteDetailComponent', () => {
+  let component: PosteDetailComponent;
+  let fixture: ComponentFixture<PosteDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddChefDequipeComponent ]
+      declarations: [ PosteDetailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddChefDequipeComponent);
+    fixture = TestBed.createComponent(PosteDetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

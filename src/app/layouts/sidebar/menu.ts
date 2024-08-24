@@ -33,6 +33,12 @@ export const MENU: MenuItem[] = [
                 link: '/dashboard/admin/poste',
                 parentId: 2
             },
+            {
+                id: 6,
+                label: 'FORMATION',
+                link: '/dashboard/admin/calendrier',
+                parentId: 2
+            },
             
         ]
     },
@@ -48,13 +54,13 @@ export const MENU: MenuItem[] = [
             {
                 id: 7,
                 label: 'Profile',
-                link: '/dashboard/',
+                link: '/dashboard/chefdequipe/profile/{{idUser}}',
                 parentId: 6
             },
             {
                 id: 8,
                 label: 'Service',
-                link: '/dashboards/chefdequipe',
+                link: '/dashboard/chefdequipe/serviceEq/{{idUser}}',
                 parentId: 6
             },
             
@@ -73,7 +79,13 @@ export const MENU: MenuItem[] = [
             {
                 id: 11,
                 label: 'Profile',
-                link: '/dashboard/employe/profile',
+                link: '/dashboard/employe/profile/{{idUser}}',
+                parentId: 10
+            },
+            {
+                id: 12,
+                label: 'Formation',
+                link: '/dashboard/employe/calendrier/{{idUser}}',
                 parentId: 10
             },
            

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChefDequipeComponent } from './chef-dequipe.component';
+import { CalandarDatailComponent } from './calandar-datail.component';
 
-describe('ChefDequipeComponent', () => {
-  let component: ChefDequipeComponent;
-  let fixture: ComponentFixture<ChefDequipeComponent>;
+describe('CalandarDatailComponent', () => {
+  let component: CalandarDatailComponent;
+  let fixture: ComponentFixture<CalandarDatailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChefDequipeComponent ]
+      declarations: [ CalandarDatailComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChefDequipeComponent);
+    fixture = TestBed.createComponent(CalandarDatailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

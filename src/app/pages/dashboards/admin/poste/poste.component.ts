@@ -10,6 +10,7 @@ import { JobPosition } from 'src/app/core/models/JobPosition';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CompetenceService } from 'src/app/core/services/competence.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -40,7 +41,7 @@ export class PosteComponent implements OnInit {
   @ViewChildren(AdvancedSortableDirective) headers: QueryList<AdvancedSortableDirective>;
   public isCollapsed = true;
 
-  constructor(public service: AdvancedService, private modalService: NgbModal,private competanceservice:CompetenceService,private fb: FormBuilder,private jobpositionService:JobPositionService) {
+  constructor(public service: AdvancedService,private router: Router, private modalService: NgbModal,private competanceservice:CompetenceService,private fb: FormBuilder,private jobpositionService:JobPositionService) {
     this.tables$ = this.service.tables$;
       this.total$ = service.total$;
       this.competanceData = this.fb.group({
@@ -347,6 +348,10 @@ deletePoste(id: number) {
       })
  
   
+}
+
+posteDetails(id: number){
+  this.router.navigate(['/admin/poste/', id]);
 }
 
 }

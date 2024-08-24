@@ -69,4 +69,37 @@ export class EvaluationService {
     });
   }
 
+  deleteEvaluationsByUser(userId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete-by-user/${userId}`);
+  }
+
+  getEvaluationsByUserIdAndCompetenceIdwithoutForUser(userId: number, compId: number): Observable<Evaluation[]> {
+    let params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('competenceId', compId.toString());
+
+    return new Observable<Evaluation[]>(observer => {
+      this.http.get<Evaluation[]>(`${this.apiUrl}/find-user-allcompetence-withouforuser`, { params })
+        .subscribe({
+          next: (data) => observer.next(data),
+          error: (err: HttpErrorResponse) => {
+            console.error(`Backend returned code ${err.status}, body was: ${err.error}`);
+            observer.error('Something went wrong; please try again later.');
+          },
+          complete: () => observer.complete()
+        });
+    });
+  }
+
+  calculateAndAssignAverageNote(userId: number, competenceId: number): Observable<number> {
+    const params = new HttpParams()
+    .set('userId', userId.toString())
+    .set('competenceId', competenceId.toString());
+
+   return this.http.post<number>(`${this.apiUrl}/calculate-note-competence`, null, { params });
+    
+  }
+
+
+
 }

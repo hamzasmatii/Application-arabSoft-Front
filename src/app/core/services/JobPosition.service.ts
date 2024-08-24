@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JobPosition } from '../models/JobPosition';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -30,4 +31,11 @@ export class JobPositionService {
   deleteJobPosition(jobPositionId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${jobPositionId}`);
   }
+
+ 
+  getUsersForJobPosition(id: number): Observable<User[]> {
+    return this.http.post<User[]>(`http://localhost:8085/api/jobposition/users/${id}`,null);
+    
+  }
+
 }

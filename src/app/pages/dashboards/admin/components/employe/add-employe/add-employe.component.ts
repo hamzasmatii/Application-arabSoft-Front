@@ -136,6 +136,14 @@ constructor(public formBuilder: FormBuilder, private modalService: NgbModal,priv
         })
 
         
+      }else{
+        this.posteUser=null;
+        this.idPoste=null;
+        this.SelcetedPoste=null;
+        this.TableCompetancesForUser=[];
+          this.TableCompetancesForPoste= []
+          
+
       }
         
       })
@@ -397,6 +405,13 @@ constructor(public formBuilder: FormBuilder, private modalService: NgbModal,priv
 
 
 
+    }
+
+    deleteEvaluationsByUser(){
+      this.evalutionService.deleteEvaluationsByUser(this.id).subscribe(()=>{
+        this.loadUser(this.id);
+        
+      })
     }
   
 

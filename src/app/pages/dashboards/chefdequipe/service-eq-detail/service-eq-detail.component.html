@@ -19,9 +19,9 @@
             </div>
            
             <h5 class="font-size-15 mb-1"><a href="javascript: void(0);" class="text-dark">{{data.nom}} {{data.prenom}}</a></h5>
-            <p class="text-muted">{{data.poste}}</p>
-            <div>
-              <a href="javascript: void(0);" class="badge bg-primary font-size-11 m-1">{{data.poste}}</a>
+            <p class="text-muted">{{jobPositions[data.id]}}</p>
+            <div *ngFor="let comp of competenceposte[data.id]">
+              <a href="javascript: void(0);" class="badge bg-primary font-size-11 m-1">{{comp||'N/A'}}</a>
             </div>
           </div>
           <div class="card-footer bg-transparent border-top">
@@ -36,31 +36,7 @@
     </div>
     <!-- end row -->
   
-    <div class="row">
-      <div class="col-12">
-
-        
-          <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Statistique </h4>
-      <p class="card-title-desc">Statistique de tous les employes par note poste</p>
-             
-      <apx-chart class="apex-charts" dir="ltr" [series]="dashedLineChart.series" [chart]="dashedLineChart.chart"
-      [dataLabels]="dashedLineChart.dataLabels" [stroke]="dashedLineChart.stroke"
-      [colors]="dashedLineChart.colors" [xaxis]="dashedLineChart.xaxis" [grid]="dashedLineChart.grid"
-      [tooltip]="dashedLineChart.tooltip" [plotOptions]="dashedLineChart.plotOptions"
-      [fill]="dashedLineChart.fill" [markers]="dashedLineChart.markers" [legend]="dashedLineChart.legend"
-      [yaxis]="dashedLineChart.yaxis" [tooltip]="dashedLineChart.tooltip"></apx-chart>
-       
-    </div>
-  </div>
-  
-  
-         
-  
-            
-      </div> <!-- end col-->
-    </div>
+    
     <!-- end row -->
   
   </div> <!-- container-fluid -->

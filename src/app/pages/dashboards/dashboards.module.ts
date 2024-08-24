@@ -22,9 +22,20 @@ import { EmployeDetailComponent } from './employe/employe-detail/employe-detail.
 import { ProfilComponent } from './chefdequipe/profil/profil.component';
 import { ServiceEqDetailComponent } from './chefdequipe/service-eq-detail/service-eq-detail.component';
 import { PosteComponent } from './admin/poste/poste.component';
-
+import { PosteDetailComponent } from './admin/poste/poste-detail/poste-detail.component';
+import { CalendarComponent } from './admin/components/employe/formation/calendar/calendar.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin
+import bootstrapPlugin from "@fullcalendar/bootstrap";
+import { CalandarDatailComponent } from './employe/calandar-datail/calandar-datail.component';
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin,
+  bootstrapPlugin
+]);
 @NgModule({
-  declarations: [   ServiceEqComponent, EmployeComponent,AdvancedSortableDirective, AddEmployeComponent, EmployeDetailComponent, ProfilComponent, ServiceEqDetailComponent, PosteComponent],
+  declarations: [   ServiceEqComponent, EmployeComponent,AdvancedSortableDirective, AddEmployeComponent, EmployeDetailComponent, ProfilComponent, ServiceEqDetailComponent, PosteComponent, PosteDetailComponent,CalendarComponent, CalandarDatailComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -45,7 +56,8 @@ import { PosteComponent } from './admin/poste/poste.component';
     NgbDropdownModule,
     FormsModule,
     Ng2SmartTableModule,
-    ChartsModule
+    ChartsModule,
+    FullCalendarModule
   ]
 })
 export class DashboardsModule { }
